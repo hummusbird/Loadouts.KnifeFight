@@ -1,0 +1,8 @@
+WeaponData
+{
+	"reload_enabled"				"0"
+	"empty_reload_only"				"0"
+	"ammo_no_remove_from_clip"                      "0"
+	"ammo_no_remove_from_stockpile"                 "0"
+	"fire_rate"   					"0"
+}

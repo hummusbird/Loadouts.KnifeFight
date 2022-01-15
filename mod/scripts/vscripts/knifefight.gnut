@@ -1,0 +1,55 @@
+global function KnifeFight_Init
+
+void function KnifeFight_Init() {
+
+    #if SERVER
+        AddCallback_OnPlayerRespawned( GiveKnifeLoadout )
+        AddCallback_OnPlayerGetsNewPilotLoadout( GiveKnifeLoadoutOnLoadoutChange )
+    #endif
+}
+
+bool function KnifeFightEnabled() {
+    return GetCurrentPlaylistVarInt("knife_fight", 0) == 1
+}
+
+#if SERVER
+
+    void function GiveKnifeLoadout( entity player ) {
+        if ( !KnifeFightEnabled() )
+            return
+
+        foreach ( entity weapon in player.GetMainWeapons() ) {
+            weapon.SetWeaponPrimaryAmmoCount(0)
+            player.TakeWeaponNow( weapon.GetWeaponClassName() )
+        }
+
+        player.TakeOffhandWeapon(0)
+        player.TakeOffhandWeapon(1)
+        player.TakeOffhandWeapon(5)
+        player.GiveOffhandWeapon( "mp_weapon_grenade_sonar", OFFHAND_SPECIAL )
+        player.GiveOffhandWeapon( "mp_weapon_grenade_gravity", OFFHAND_ORDNANCE )
+        player.GiveOffhandWeapon( "melee_pilot_kunai", OFFHAND_MELEE )
+
+        player.GiveWeapon( "mp_weapon_smart_pistol" )
+        thread SetAmmo( player )
+    }
+
+    void function SetAmmo( entity player )
+    {
+        foreach ( entity weapon in player.GetMainWeapons() )
+        {
+            weapon.SetWeaponPrimaryAmmoCount(0)
+            weapon.SetWeaponPrimaryClipCount(0)
+        }
+        WaitFrame()
+        if ( IsValid( player ) )
+            PlayerEarnMeter_SetMode( player, eEarnMeterMode.DISABLED )
+    }
+
+
+    void function GiveKnifeLoadoutOnLoadoutChange(entity player, PilotLoadoutDef loadout ) {
+        GiveKnifeLoadout( player )
+    }
+
+
+#endif

@@ -1,0 +1,8 @@
+WeaponData
+{
+	MP_BASE
+	{
+		"ammo_drains_to_empty_on_fire"					"0"
+		"regen_ammo_refill_rate"					"200"
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"Name": "Loadouts.KnifeFight",
+	"Description": "Titan with a CAR.",
+	"LoadPriority": 2,
+	"RequiredOnClient": false,
+	"Version": "1.0",
+
+	"Scripts": [
+		{
+			"Path": "knifefight.gnut",
+			"RunOn": "MP",
+			"ClientCallback": {
+				"After": "KnifeFight_Init"
+			},
+            "ServerCallback": {
+                "After": "KnifeFight_Init"
+            }
+		}
+	]
+}
